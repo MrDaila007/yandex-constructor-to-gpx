@@ -8,6 +8,7 @@ Export a public [Yandex Map Constructor](https://yandex.com/map-constructor) map
 
 Yandex has no official GPX export for published Constructor maps. This tool reads the `userMap` JSON already embedded in the public map page. Several distances on one map (3K / 5K / 10K) become several `.gpx` files.
 
+[![CI](https://github.com/MrDaila007/yandex-constructor-to-gpx/actions/workflows/ci.yml/badge.svg)](https://github.com/MrDaila007/yandex-constructor-to-gpx/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-e27a2e.svg)](LICENSE)
 [![Web](https://img.shields.io/badge/web-GitHub%20Pages-2f5d3a.svg)](https://mrdaila007.github.io/yandex-constructor-to-gpx/)
 [![Python](https://img.shields.io/badge/CLI-Python%203.10%2B-3776ab.svg)](#cli)
@@ -102,6 +103,21 @@ GPX uses `lat, lon`. Names **Старт / Финиш / Питьевой пунк
 
 - [Nesvizh 2026](https://yandex.com/maps/?um=constructor%3Afbd12684307cb322481c9e279ba4e3cd969a565ab626ec9ecb92fc2b36949e83) — 23 waypoints, 135 track points
 - [Bison Trail 18.10.2026](https://yandex.com/maps/?um=constructor%3Aaf3b2c797a2526fe5b2a9971ff9e4886428b32275259e851d19a9b778c22fe48) — 3K / 5K / 10K
+
+## CI
+
+GitHub Actions runs on every push/PR and **every day at 06:17 UTC**.
+
+- Offline fixtures (`tests/fixtures/*.json`) — export still produces the known Nesvizh / Bison Trail GPX files; the JS converter matches Python; the bookmarklet still bakes into the site.
+- Live canaries — download the public Constructor HTML from Yandex and parse `userMap`. If Yandex changes the page and `"userMap"` / line coordinates disappear, the **Live Yandex page format** job fails.
+
+A failed scheduled run emails the GitHub account that last changed `.github/workflows/ci.yml` (watch the repo / enable Actions notifications). Re-run from the Actions tab anytime (`workflow_dispatch`).
+
+```bash
+python3 -m unittest discover -s tests -t . -p 'test_*.py' -v
+YCG_SKIP_LIVE=1 python3 -m unittest discover -s tests -t . -p 'test_*.py' -v
+node tests/test_js.mjs
+```
 
 ## License
 

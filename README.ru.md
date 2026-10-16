@@ -8,6 +8,7 @@
 
 Официального экспорта GPX у опубликованных карт конструктора нет. Данные берутся из JSON `userMap`, который уже лежит в HTML публичной страницы. Несколько дистанций на одной карте (3K / 5K / 10K) → несколько `.gpx`.
 
+[![CI](https://github.com/MrDaila007/yandex-constructor-to-gpx/actions/workflows/ci.yml/badge.svg)](https://github.com/MrDaila007/yandex-constructor-to-gpx/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-e27a2e.svg)](LICENSE)
 [![Web](https://img.shields.io/badge/web-GitHub%20Pages-2f5d3a.svg)](https://mrdaila007.github.io/yandex-constructor-to-gpx/?lang=ru)
 
@@ -101,6 +102,15 @@ yandex-constructor-gpx 'ССЫЛКА' -o ./out --save-json ./usermap.json
 
 - [Несвиж 2026](https://yandex.com/maps/?um=constructor%3Afbd12684307cb322481c9e279ba4e3cd969a565ab626ec9ecb92fc2b36949e83) — 23 waypoint, 135 точек трека
 - [Bison Trail 18.10.2026](https://yandex.com/maps/?um=constructor%3Aaf3b2c797a2526fe5b2a9971ff9e4886428b32275259e851d19a9b778c22fe48) — 3K / 5K / 10K
+
+## CI
+
+GitHub Actions на каждый push/PR и **каждый день в 06:17 UTC**.
+
+- Фикстуры — известные карты Несвиж / Bison Trail по-прежнему собираются в GPX; JS совпадает с Python; букмарклет вшивается в сайт.
+- Живые канарейки — скачивается HTML конструктора с Яндекса и парсится `userMap`. Если Яндекс сменит вёрстку и `userMap` пропадёт, упадёт job **Live Yandex page format**.
+
+При падении по расписанию GitHub пишет на почту аккаунту, который последний менял `.github/workflows/ci.yml`. Вручную: Actions → CI → Run workflow.
 
 ## Лицензия
 

@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Daily: catch Yandex Constructor HTML format changes even without commits.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'schedule' }}
+
+jobs:
+  fixtures:
+    name: Fixtures / JS / bookmarklet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Python fixture tests
+        env:
+          YCG_SKIP_LIVE: "1"
+        run: python3 -m unittest discover -s tests -t . -p "test_*.py" -v
+      - name: JS converter matches fixtures
+        run: node tests/test_js.mjs
+
+  live:
+    name: Live Yandex page format
+    runs-on: ubuntu-latest
+    needs: fixtures
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch public Constructor maps and parse userMap
+        run: python3 -m unittest tests.test_live -v

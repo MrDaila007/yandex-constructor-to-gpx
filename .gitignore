@@ -7,4 +7,5 @@ venv/
 .env.*
 *.json
 !package.json
+!tests/fixtures/*.json
 .DS_Store

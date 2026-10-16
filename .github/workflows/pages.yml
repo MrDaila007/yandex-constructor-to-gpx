@@ -15,7 +15,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  test:
+    name: Fixtures before deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Python fixture tests
+        env:
+          YCG_SKIP_LIVE: "1"
+        run: python3 -m unittest discover -s tests -t . -p "test_*.py" -v
+      - name: JS converter matches fixtures
+        run: node tests/test_js.mjs
+
   deploy:
+    needs: test
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
