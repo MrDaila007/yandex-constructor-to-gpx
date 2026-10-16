@@ -11,6 +11,12 @@
   const I18N = {
     en: {
       title: "Yandex Constructor → GPX",
+      kicker: "Trail export",
+      titleLine: "Yandex Constructor",
+      convertTitle: "From a map link",
+      badgeBest: "Most reliable",
+      start: "Start",
+      finish: "Finish",
       lead: "Export a public Constructor map to GPX: track and waypoints. Several lines on the map become several files.",
       howtoTitle: "Save the bookmarklet",
       howtoDragBefore: "Drag",
@@ -41,6 +47,12 @@
     },
     ru: {
       title: "Яндекс Конструктор → GPX",
+      kicker: "Экспорт трассы",
+      titleLine: "Яндекс Конструктор",
+      convertTitle: "По ссылке на карту",
+      badgeBest: "Надёжнее всего",
+      start: "Старт",
+      finish: "Финиш",
       lead: "Экспорт публичной карты конструктора в GPX: трек и метки. Несколько линий на карте — несколько файлов.",
       howtoTitle: "Как сохранить букмарклет",
       howtoDragBefore: "Перетащи",
@@ -158,7 +170,10 @@
       const meta = document.createElement("div");
       meta.className = "meta";
       meta.textContent = t("meta")(file.mapTitle, file.nTrk, file.km, file.nWpt);
-      info.append(heading, meta);
+      const km = document.createElement("div");
+      km.className = "km";
+      km.textContent = `~${file.km.toFixed(2)} ${lang === "ru" ? "км" : "km"}`;
+      info.append(heading, meta, km);
       const btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = file.filename;
@@ -226,13 +241,13 @@
   ["dragenter", "dragover"].forEach((name) => {
     drop.addEventListener(name, (event) => {
       event.preventDefault();
-      drop.style.borderColor = "var(--accent)";
+      drop.classList.add("is-over");
     });
   });
   ["dragleave", "drop"].forEach((name) => {
     drop.addEventListener(name, (event) => {
       event.preventDefault();
-      drop.style.borderColor = "";
+      drop.classList.remove("is-over");
     });
   });
   drop.addEventListener("drop", (event) => {
