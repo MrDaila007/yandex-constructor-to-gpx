@@ -1,7 +1,7 @@
 {
   "name": "Yandex Constructor → GPX",
   "short_name": "Constructor GPX",
-  "description": "Export a public Yandex Map Constructor map to GPX.",
+  "description": "Export a public Yandex Maps Constructor map to GPX for Garmin, Strava, and GPS watches.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#10180f",

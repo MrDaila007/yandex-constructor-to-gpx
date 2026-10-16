@@ -10,7 +10,7 @@
 
   const I18N = {
     en: {
-      title: "Yandex Constructor → GPX",
+      title: "Yandex Map Constructor to GPX",
       brandKicker: "Constructor",
       kicker: "Trail export",
       titleLine: "Yandex Constructor",
@@ -18,7 +18,7 @@
       badgeBest: "Most reliable",
       start: "Start",
       finish: "Finish",
-      lead: "Export a public Constructor map to GPX: track and waypoints. Several lines on the map become several files.",
+      lead: "Free GPX export from a public Yandex Map Constructor map: track and waypoints for Garmin, Strava, and GPS watches. Several lines become several files.",
       howtoTitle: "Save the bookmarklet",
       howtoDragBefore: "Drag",
       bookmarkName: "Yandex → GPX",
@@ -44,10 +44,18 @@
       doneOne: (pts, wpts) => `Done: ${pts} points, ${wpts} waypoints`,
       doneMany: (n) => `Done: ${n} routes`,
       meta: (title, pts, km, wpts) => `${title} · ${pts} points · ~${km.toFixed(2)} km · ${wpts} waypoints`,
-      desc: "Export a public Yandex Map Constructor map to GPX: track and waypoints. Several distances become several files.",
+      desc: "Free converter: export a public Yandex Maps Constructor map to GPX for Garmin, Strava, Komoot, and GPS watches. Track and waypoints. Several race distances become several files.",
+      aboutTitle: "What this is",
+      aboutP1:
+        "Yandex Map Constructor has no official GPX export for published maps. This free page turns a public constructor link into GPX 1.1: a track and waypoints you can open in Garmin, Strava, Komoot, or a GPS watch.",
+      aboutP2:
+        "Several lines on one map (3K / 5K / 10K) become several files. Names like Start, Finish, and aid station stay unnumbered. Source code is on GitHub.",
+      aboutUse1: "Trail races, OCR, and orienteering courses drawn in Constructor",
+      aboutUse2: "Public yandex.ru/maps and yandex.com/maps links with um=constructor",
+      aboutUse3: "Bookmarklet, HTML drop, or Python CLI if you convert many maps",
     },
     ru: {
-      title: "Яндекс Конструктор → GPX",
+      title: "Яндекс Конструктор карт → GPX",
       brandKicker: "Конструктор",
       kicker: "Экспорт трассы",
       titleLine: "Яндекс Конструктор",
@@ -55,7 +63,7 @@
       badgeBest: "Надёжнее всего",
       start: "Старт",
       finish: "Финиш",
-      lead: "Экспорт публичной карты конструктора в GPX: трек и метки. Несколько линий на карте — несколько файлов.",
+      lead: "Бесплатный экспорт публичной карты Яндекс Конструктора в GPX: трек и метки для Garmin, Strava и часов. Несколько линий — несколько файлов.",
       howtoTitle: "Как сохранить букмарклет",
       howtoDragBefore: "Перетащи",
       bookmarkName: "Яндекс → GPX",
@@ -81,7 +89,15 @@
       doneOne: (pts, wpts) => `Готово: ${pts} точек, ${wpts} меток`,
       doneMany: (n) => `Готово: ${n} маршрута`,
       meta: (title, pts, km, wpts) => `${title} · ${pts} точек · ~${km.toFixed(2)} км · ${wpts} меток`,
-      desc: "Экспорт публичной карты Яндекс Конструктора в GPX: трек и метки. Несколько дистанций — несколько файлов.",
+      desc: "Бесплатный конвертер: экспорт публичной карты Яндекс Конструктора в GPX для Garmin, Strava, Komoot и часов. Трек и метки. Несколько дистанций — несколько файлов.",
+      aboutTitle: "Что это",
+      aboutP1:
+        "У опубликованных карт Яндекс Конструктора нет официального экспорта в GPX. Эта бесплатная страница делает из публичной ссылки GPX 1.1: трек и метки для Garmin, Strava, Komoot или часов.",
+      aboutP2:
+        "Несколько линий на одной карте (3K / 5K / 10K) — несколько файлов. Старт, финиш и питьевой пункт без номера. Исходный код на GitHub.",
+      aboutUse1: "Трейлы, OCR и дистанции ориентирования, нарисованные в Конструкторе",
+      aboutUse2: "Публичные ссылки yandex.ru/maps и yandex.com/maps с um=constructor",
+      aboutUse3: "Букмарклет, HTML-файл или Python CLI, если карт много",
     },
   };
 
@@ -130,6 +146,16 @@
     document.title = t("title");
     const desc = document.querySelector('meta[name="description"]');
     if (desc) desc.setAttribute("content", t("desc"));
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute("content", t("desc"));
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", t("title"));
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) ogLocale.setAttribute("content", lang === "ru" ? "ru_RU" : "en_US");
+    const twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute("content", t("title"));
+    const twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute("content", t("desc"));
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
       const value = t(key);

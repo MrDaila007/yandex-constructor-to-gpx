@@ -12,7 +12,7 @@ description: >-
 
 Официального API экспорта нет. Публичная страница карты уже содержит JSON `userMap` в HTML — этого достаточно, браузер не нужен.
 
-Веб: https://mrdaila007.github.io/yandex-constructor-to-gpx/ (EN/RU). Букмарклет **Yandex → GPX** / **Яндекс → GPX**. Документация: `README.md` (English) и `README.ru.md`.
+Веб: https://mrdaila007.github.io/yandex-constructor-to-gpx/ (EN/RU). Букмарклет **Yandex → GPX** / **Яндекс → GPX**. Документация для людей: `README.md` (English) и `README.ru.md`. GitHub: https://github.com/MrDaila007/yandex-constructor-to-gpx
 
 ## Запуск
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mrdaila007.github.io/yandex-constructor-to-gpx/sitemap.xml
