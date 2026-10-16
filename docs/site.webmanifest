@@ -1,0 +1,26 @@
+{
+  "name": "Yandex Constructor → GPX",
+  "short_name": "Constructor GPX",
+  "description": "Export a public Yandex Map Constructor map to GPX.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#10180f",
+  "theme_color": "#10180f",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ]
+}

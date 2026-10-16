@@ -1,5 +1,7 @@
 # yandex-constructor-to-gpx
 
+<img src="docs/logo.png" width="88" height="88" alt="Constructor → GPX">
+
 [Русский](README.ru.md)
 
 Converts a public [Yandex Map Constructor](https://yandex.com/map-constructor) map (`um=constructor:...`) to GPX 1.1: one track per line plus waypoints.

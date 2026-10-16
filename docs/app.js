@@ -11,6 +11,7 @@
   const I18N = {
     en: {
       title: "Yandex Constructor → GPX",
+      brandKicker: "Constructor",
       kicker: "Trail export",
       titleLine: "Yandex Constructor",
       convertTitle: "From a map link",
@@ -47,6 +48,7 @@
     },
     ru: {
       title: "Яндекс Конструктор → GPX",
+      brandKicker: "Конструктор",
       kicker: "Экспорт трассы",
       titleLine: "Яндекс Конструктор",
       convertTitle: "По ссылке на карту",

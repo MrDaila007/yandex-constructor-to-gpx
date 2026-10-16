@@ -1,5 +1,7 @@
 # yandex-constructor-to-gpx
 
+<img src="docs/logo.png" width="88" height="88" alt="Конструктор → GPX">
+
 [English](README.md)
 
 Конвертирует публичную карту [Яндекс Конструктора](https://yandex.ru/map-constructor) (`um=constructor:...`) в GPX 1.1: трек по каждой линии и waypoints по меткам.
