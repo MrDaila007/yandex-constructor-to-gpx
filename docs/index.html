@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Яндекс Конструктор → GPX</title>
+    <meta
+      name="description"
+      content="Экспорт публичной карты Яндекс Конструктора в GPX: трек и метки. Несколько дистанций — несколько файлов."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="topo" aria-hidden="true"></div>
+    <main class="wrap">
+      <p class="kicker">Trail export</p>
+      <h1>Яндекс Конструктор → GPX</h1>
+      <p class="lead">
+        Вставь публичную ссылку карты с <code>um=constructor:</code> или перетащи
+        сохранённый HTML. Получишь трек и метки. Несколько линий — несколько файлов.
+        Надёжный путь: открой карту в Яндексе и нажми
+        <a id="bookmarklet" href="#">букмарклет «GPX»</a>
+        (перетащи ссылку на панель закладок).
+      </p>
+
+      <form class="card" id="convert-form">
+        <label for="map-url">Ссылка на карту</label>
+        <div class="row">
+          <input
+            id="map-url"
+            name="url"
+            type="url"
+            required
+            placeholder="https://yandex.com/maps/?um=constructor%3A..."
+            autocomplete="off"
+          />
+          <button id="submit" type="submit">Скачать GPX</button>
+        </div>
+        <div class="examples" id="examples"></div>
+        <label class="drop" id="drop">
+          Или перетащи сохранённый HTML/JSON карты.
+          <input id="file" type="file" accept=".html,.htm,.json,text/html,application/json" />
+        </label>
+        <p class="status" id="status" aria-live="polite"></p>
+      </form>
+
+      <section class="results" id="results" aria-live="polite"></section>
+
+      <p class="foot">
+        Страница статическая, работает в браузере через CORS-прокси к Яндексу.
+        Код:
+        <a href="https://github.com/MrDaila007/yandex-constructor-to-gpx">GitHub</a>.
+      </p>
+    </main>
+    <script src="./convert.js"></script>
+    <script src="./app.js"></script>
+    <script>
+      (function () {
+        var a = document.getElementById("bookmarklet");
+        var src = new URL("convert.js", window.location.href).href;
+        var run = new URL("bookmarklet.js", window.location.href).href;
+        a.href =
+          "javascript:(function(){var s=document.createElement('script');s.src='" +
+          src +
+          "';s.onload=function(){var t=document.createElement('script');t.src='" +
+          run +
+          "';document.body.appendChild(t);};document.body.appendChild(s);}())";
+      })();
+    </script>
+  </body>
+</html>
