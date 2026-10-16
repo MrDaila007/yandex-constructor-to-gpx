@@ -131,21 +131,24 @@
     if (file) fromFile(file);
   });
 
-  async function setupBookmarklet() {
+  function setupBookmarklet() {
     const a = document.getElementById("bookmarklet");
-    if (!a) return;
-    const convertSrc = await fetch(new URL("convert.js", window.location.href)).then((r) => r.text());
-    const runner = `
-try {
-  var api = window.YandexConstructorGpx;
-  var files = api.exportGpxFiles(api.parseEmbeddedObject(document.documentElement.outerHTML, "userMap"));
-  api.downloadGpxFiles(files);
-  alert("GPX: " + files.map(function (f) { return f.filename; }).join(", "));
-} catch (err) {
-  alert(err && err.message ? err.message : String(err));
-}
-`;
-    a.href = "javascript:" + encodeURIComponent(convertSrc + "\n" + runner);
+    const src = document.getElementById("bookmarklet-src");
+    if (!a || !src) return;
+    const href = src.textContent.trim();
+    a.setAttribute("href", href);
+    a.addEventListener("click", async (event) => {
+      event.preventDefault();
+      try {
+        await navigator.clipboard.writeText(href);
+        setStatus(
+          "Букмарклет скопирован. Создай новую закладку и вставь это в поле URL. Затем открой карту Яндекса и нажми закладку — не эту страницу.",
+          "ok",
+        );
+      } catch (_err) {
+        setStatus("Не вышло скопировать. Создай закладку вручную и вставь javascript:… из адреса ссылки (правый клик → копировать).", "error");
+      }
+    });
   }
 
   setupBookmarklet();
