@@ -26,7 +26,8 @@
         сохранённый HTML. Получишь трек и метки. Несколько линий — несколько файлов.
         Надёжный путь: открой карту в Яндексе и нажми
         <a id="bookmarklet" href="#">букмарклет «GPX»</a>
-        (перетащи ссылку на панель закладок).
+        (перетащи ссылку на панель закладок). Он выполняется целиком в закладке,
+        без загрузки скриптов с github.io — иначе CSP Яндекса его блокирует.
       </p>
 
       <form class="card" id="convert-form">
@@ -60,18 +61,5 @@
     </main>
     <script src="./convert.js"></script>
     <script src="./app.js"></script>
-    <script>
-      (function () {
-        var a = document.getElementById("bookmarklet");
-        var src = new URL("convert.js", window.location.href).href;
-        var run = new URL("bookmarklet.js", window.location.href).href;
-        a.href =
-          "javascript:(function(){var s=document.createElement('script');s.src='" +
-          src +
-          "';s.onload=function(){var t=document.createElement('script');t.src='" +
-          run +
-          "';document.body.appendChild(t);};document.body.appendChild(s);}())";
-      })();
-    </script>
   </body>
 </html>

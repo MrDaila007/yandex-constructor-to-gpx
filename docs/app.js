@@ -130,4 +130,23 @@
     const file = event.dataTransfer.files && event.dataTransfer.files[0];
     if (file) fromFile(file);
   });
+
+  async function setupBookmarklet() {
+    const a = document.getElementById("bookmarklet");
+    if (!a) return;
+    const convertSrc = await fetch(new URL("convert.js", window.location.href)).then((r) => r.text());
+    const runner = `
+try {
+  var api = window.YandexConstructorGpx;
+  var files = api.exportGpxFiles(api.parseEmbeddedObject(document.documentElement.outerHTML, "userMap"));
+  api.downloadGpxFiles(files);
+  alert("GPX: " + files.map(function (f) { return f.filename; }).join(", "));
+} catch (err) {
+  alert(err && err.message ? err.message : String(err));
+}
+`;
+    a.href = "javascript:" + encodeURIComponent(convertSrc + "\n" + runner);
+  }
+
+  setupBookmarklet();
 })();
