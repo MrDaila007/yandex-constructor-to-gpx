@@ -73,6 +73,38 @@ h1 {
   color: var(--accent-2);
 }
 
+.howto h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.howto p {
+  color: var(--muted);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+
+.howto p:last-child {
+  margin-bottom: 0;
+}
+
+.wrap > .howto {
+  margin: 0 0 18px;
+}
+
+a.bookmarklet {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent);
+  color: #1a1208;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: grab;
+  vertical-align: middle;
+}
+
 form.card,
 .card {
   background: color-mix(in srgb, var(--card) 88%, black);

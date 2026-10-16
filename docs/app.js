@@ -134,21 +134,27 @@
   function setupBookmarklet() {
     const a = document.getElementById("bookmarklet");
     const src = document.getElementById("bookmarklet-src");
+    const copyBtn = document.getElementById("copy-bookmarklet");
     if (!a || !src) return;
     const href = src.textContent.trim();
     a.setAttribute("href", href);
-    a.addEventListener("click", async (event) => {
+    a.addEventListener("click", (event) => {
       event.preventDefault();
-      try {
-        await navigator.clipboard.writeText(href);
-        setStatus(
-          "Букмарклет скопирован. Создай новую закладку и вставь это в поле URL. Затем открой карту Яндекса и нажми закладку — не эту страницу.",
-          "ok",
-        );
-      } catch (_err) {
-        setStatus("Не вышло скопировать. Создай закладку вручную и вставь javascript:… из адреса ссылки (правый клик → копировать).", "error");
-      }
+      setStatus("Перетащи кнопку «Яндекс → GPX» на панель закладок, затем открой карту Яндекса и нажми закладку.", "ok");
     });
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(href);
+          setStatus(
+            "Скопировано. Создай закладку с именем «Яндекс → GPX» и вставь javascript:… в поле адреса. Потом открой карту Яндекса.",
+            "ok",
+          );
+        } catch (_err) {
+          setStatus("Не вышло скопировать. Перетащи кнопку «Яндекс → GPX» на панель закладок.", "error");
+        }
+      });
+    }
   }
 
   setupBookmarklet();

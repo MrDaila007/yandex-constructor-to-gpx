@@ -2,13 +2,38 @@
 
 Конвертирует публичную карту [Яндекс Конструктора](https://yandex.ru/map-constructor) (`um=constructor:...`) в GPX 1.1: трек по каждой линии и waypoints по меткам.
 
-**Веб (GitHub Pages):** https://mrdaila007.github.io/yandex-constructor-to-gpx/
+**Веб:** https://mrdaila007.github.io/yandex-constructor-to-gpx/
 
-На странице можно вставить ссылку, перетащить сохранённый HTML карты или перетащить букмарклет на панель закладок и нажать его, стоя на странице Яндекс.Карт (так надёжнее: браузер не даёт GitHub Pages напрямую читать Яндекс).
+Официального API экспорта нет. Данные берутся из встроенного в страницу JSON `userMap`. Несколько дистанций на одной карте (3K / 5K / 10K) → несколько `.gpx`.
 
-Официального API экспорта нет. Скрипт качает публичную HTML-страницу и читает встроенный JSON `userMap`. Браузер и ключ API не нужны. Несколько дистанций на одной карте (3K / 5K / 10K) → несколько `.gpx`.
+## Веб
 
-## Установка
+Три способа, от простого к надёжному.
+
+### 1. Ссылка на карту
+
+Вставь URL `yandex.com/maps` / `yandex.ru/maps` с `um=constructor:...` и нажми «Скачать GPX».
+
+Запрос идёт через публичный CORS-прокси: Яндекс не отдаёт карту напрямую со страницы GitHub Pages. Прокси иногда падает.
+
+### 2. Файл HTML или JSON
+
+На карте в браузере: Сохранить как → HTML. Перетащи файл на сайт. Либо JSON `userMap`, если он уже есть.
+
+### 3. Букмарклет «Яндекс → GPX» (надёжнее)
+
+CSP Яндекса блокирует скрипты с `github.io`, поэтому букмарклет **самодостаточный**: весь конвертер лежит в закладке.
+
+1. Открой [страницу экспорта](https://mrdaila007.github.io/yandex-constructor-to-gpx/).
+2. Перетащи кнопку **Яндекс → GPX** на панель закладок (имя закладки будет таким же).
+3. Открой нужную карту конструктора в Яндексе.
+4. Нажми закладку — скачаются `.gpx`.
+
+Если браузер не даёт перетащить: на сайте нажми «скопировать javascript:», создай закладку вручную, имя `Яндекс → GPX`, в поле адреса вставь скопированное.
+
+Кликать кнопку, оставаясь на GitHub Pages, бессмысленно: экспортировать можно только со страницы карты.
+
+## CLI
 
 Нужен Python 3.10+ (только стандартная библиотека).
 
@@ -18,9 +43,7 @@ cd yandex-constructor-to-gpx
 ln -sf "$(pwd)/scripts/constructor_to_gpx.py" ~/.local/bin/yandex-constructor-gpx
 ```
 
-Для Cursor-скилла клонируйте (или сделайте symlink) в `~/.cursor/skills/yandex-constructor-to-gpx`.
-
-## Использование
+Для Cursor-скилла: клон или symlink в `~/.cursor/skills/yandex-constructor-to-gpx`.
 
 ```bash
 yandex-constructor-gpx 'https://yandex.com/maps/?um=constructor%3A...' -o ./gpx
@@ -35,11 +58,11 @@ yandex-constructor-gpx 'ССЫЛКА' -o ~/Documents --prefix bison-trail-2026
 yandex-constructor-gpx 'ССЫЛКА' -o ./out --save-json ./usermap.json
 ```
 
-Источник: URL `yandex.ru` / `yandex.com`, constructor id (64 hex), сохранённый HTML или JSON.
+Источник: URL, constructor id (64 hex), сохранённый HTML или JSON.
 
-`--chrome` — запасной путь через headless Chrome, если в HTML нет `userMap`.
+`--chrome` — запасной путь через headless Chrome, если HTML пустой.
 
-## Данные
+## Данные в GPX
 
 | Что | Откуда | Координаты |
 |-----|--------|------------|
